@@ -1,6 +1,6 @@
 {
   "name": "genebean-firewalld2iptables",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Gene Liverman",
   "summary": "A Puppet module to replace firewalld with iptables",
   "license": "BSD-3-Clause",
