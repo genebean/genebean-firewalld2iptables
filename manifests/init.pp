@@ -1,6 +1,6 @@
 # == Class: firewalld2iptables
 #
-# This module manages firewalld2iptables
+# This module manages firewalld and iptables
 #
 # === Parameters:
 #
@@ -36,44 +36,56 @@ class firewalld2iptables (
   $iptables_enable  = true,
   $ip6tables_enable = true
 ) {
-  if ($manage_package) {
-    package { 'iptables-services': ensure => $iptables_ensure, }
-  }
-  
-  service { 'firewalld':
-    ensure  => 'stopped',
-    enable  => false,
-    require => Package['iptables-services'],
-    before  => [
-      Service['iptables'],
-      Service['ip6tables']
-    ],
-  }
 
-  if ($iptables_enable) {
-    service { 'iptables':
-      ensure  => 'running',
-      enable  => true,
-      require => Service['firewalld'],
+  # Only run on systems known to have firewalld
+  case $::osfamily {
+    RedHat : {
+      if ($::operatingsystemmajrelease == 7) {
+        if ($manage_package) {
+          package { 'iptables-services': ensure => $iptables_ensure, }
+        }
+        
+        service { 'firewalld':
+          ensure  => 'stopped',
+          enable  => false,
+          require => Package['iptables-services'],
+          before  => [
+            Service['iptables'],
+            Service['ip6tables']
+          ],
+        }
+      
+        if ($iptables_enable) {
+          service { 'iptables':
+            ensure  => 'running',
+            enable  => true,
+            require => Service['firewalld'],
+          }
+        } else {
+          service { 'iptables':
+            ensure => 'stopped',
+            enable => false,
+          }
+        } # end $iptables_enable
+      
+        if ($ip6tables_enable) {
+          service { 'ip6tables':
+            ensure  => 'running',
+            enable  => true,
+            require => Service['firewalld'],
+          }
+        } else {
+          service { 'ip6tables':
+            ensure => 'stopped',
+            enable => false,
+          }
+        } # end $ip6tables_enable
+      }
+      
+    } # end RedHat
+    
+    default: {
     }
-  } else {
-    service { 'iptables':
-      ensure => 'stopped',
-      enable => false,
-    }
-  } # end $iptables_enable
-
-  if ($ip6tables_enable) {
-    service { 'ip6tables':
-      ensure  => 'running',
-      enable  => true,
-      require => Service['firewalld'],
-    }
-  } else {
-    service { 'ip6tables':
-      ensure => 'stopped',
-      enable => false,
-    }
-  } # end $ip6tables_enable
-
+    
+  } # end case $::osfamily
 }
