@@ -1,6 +1,6 @@
 {
   "name": "genebean-firewalld2iptables",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "author": "Gene Liverman",
   "summary": "A Puppet module to replace firewalld with iptables",
   "license": "BSD-3-Clause",
@@ -11,7 +11,7 @@
   "dependencies": [
   ],
   "requirements": [
-    { "name": "puppet", "version_requirement": ">= 2.7.0 < 4.0.0" }
+    { "name": "puppet", "version_requirement": ">= 2.7.0 < 5.0.0" }
   ],
   "operatingsystem_support": [
     { "operatingsystem": "RedHat",     "operatingsystemrelease": [ "7" ] },
