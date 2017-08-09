@@ -2,6 +2,8 @@
 
 ## 2017-08-06 - Release 0.2.1  
 - First run at using modulesync
+- Stopped testing against Puppet 3
+- Started testing against Puppet 5
 
 ## 0.1.2  
 - forgot to update this file for v0.1.1...
