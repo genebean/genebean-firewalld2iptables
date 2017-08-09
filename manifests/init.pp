@@ -44,7 +44,7 @@ class firewalld2iptables (
         if ($manage_package) {
           package { 'iptables-services': ensure => $iptables_ensure, }
         }
-        
+
         service { 'firewalld':
           ensure  => 'stopped',
           enable  => false,
@@ -54,7 +54,7 @@ class firewalld2iptables (
             Service['ip6tables']
           ],
         }
-      
+
         if ($iptables_enable) {
           service { 'iptables':
             ensure  => 'running',
@@ -67,7 +67,7 @@ class firewalld2iptables (
             enable => false,
           }
         } # end $iptables_enable
-      
+
         if ($ip6tables_enable) {
           service { 'ip6tables':
             ensure  => 'running',
@@ -81,11 +81,11 @@ class firewalld2iptables (
           }
         } # end $ip6tables_enable
       }
-      
+
     } # end RedHat
-    
+
     default: {
     }
-    
+
   } # end case $::osfamily
 }
