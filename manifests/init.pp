@@ -38,9 +38,9 @@ class firewalld2iptables (
 ) {
 
   # Only run on systems known to have firewalld
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat' : {
-      if ($::operatingsystemmajrelease == '7') {
+      if $facts['os']['release']['major']['7'] {
         if ($manage_package) {
           package { 'iptables-services': ensure => $iptables_ensure, }
         }
