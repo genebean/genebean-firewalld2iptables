@@ -31,10 +31,10 @@
 #
 #
 class firewalld2iptables (
-  $manage_package   = true,
-  $iptables_ensure  = 'present',
-  $iptables_enable  = true,
-  $ip6tables_enable = true
+  Boolean $manage_package,
+  String $iptables_ensure,
+  Boolean $iptables_enable,
+  Boolean $ip6tables_enable,
 ) {
 
   # Only run on systems known to have firewalld
