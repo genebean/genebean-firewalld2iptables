@@ -1,0 +1,5 @@
+---
+firewalld2iptables::manage_package: true
+firewalld2iptables::iptables_ensure: present
+firewalld2iptables::iptables_enable: true
+firewalld2iptables::ip6tables_enable: true
